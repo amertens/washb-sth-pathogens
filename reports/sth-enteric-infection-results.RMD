@@ -1,0 +1,54 @@
+---
+title: "sth-enteric-infection-results"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+load(here::here("results/results.Rdata"))
+```
+
+
+## WBB adj
+
+```{r, echo=F}
+knitr::kable(wbb_bin_adj)
+```
+
+```{r, echo=F}
+knitr::kable(wbb_cont_adj)
+```
+
+## WBK adj
+
+```{r, echo=F}
+knitr::kable(wbk_bin_adj)
+```
+
+```{r, echo=F}
+knitr::kable(wbk_cont_adj)
+```
+
+
+
+
+## WBB unadj
+
+```{r, echo=F}
+knitr::kable(wbb_bin_unadj)
+```
+
+```{r, echo=F}
+knitr::kable(wbb_cont_unadj)
+```
+
+## WBK unadj
+
+```{r, echo=F}
+knitr::kable(wbk_bin_unadj)
+```
+
+```{r, echo=F}
+knitr::kable(wbk_cont_unadj)
+```
