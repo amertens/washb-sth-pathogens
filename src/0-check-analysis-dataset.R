@@ -32,30 +32,37 @@ wbb <- left_join(wbb, wbb_enrol, by=c("dataid","clusterid","block"))
 dim(wbb)
 head(wbb)
 
+#Should be around 7094 based on number of kids with diarrhea at year 2 and number of STH samples
 
 table(wbb$tr)
 
-#Clean WBK datasets
-head(wbk_diar)
-head(wbk_sth)
-colnames(wbk_diar)
-colnames(wbk_sth)
+#Clean WBB datasets
+head(wbb_diar)
+head(wbb_sth)
+colnames(wbb_diar)
+colnames(wbb_sth)
+
+d <- anti_join(wbb_diar, wbb_sth, by=c("dataid","childid")) 
+d2 <- anti_join( wbb_sth, wbb_diar, by=c("dataid","childid")) %>% filter(!is.na(sth))
+
+dim(d)
+dim(d2)
+head(d)
+head(d2)
+
+table(d$childid)
+table(d2$childid)
+
+unique(d$dataid)[1:20]
+unique(d2$dataid)[1:20]
+
+d[d$dataid=="28002",]
+d2[d2$dataid=="28002",]
 
 
-
-wbk_diar <- wbk_diar %>% subset(., select =c("childid","clusterid","aged","sex","tr","diarr7",
-                                             "Ncomp", "cow", "goat", "chicken",
-                                             "dog","mother_age","mother_edu","water_time","roof","walls",
-                                             "floor","elec","radio","tv","mobilephone","clock",
-                                             "bicycle","motorcycle","stove","cooker","car","u18",
-                                             "HHS")) %>%
+wbk_diar <- wbk_diar %>%                                         # "HHS")) %>% 
   rename(diar7d=diarr7)
- wbk_sth <- wbk_sth %>% subset(., select =c("childidr2","deworm6m","soilw",
-                                              "wearing_shoes","sameday_defecation", "asca_epg","asca_intensity","asca_intensity_cat",
-                                             "tric_epg","tric_intensity","tric_intensity_cat", "hook_epg","hook_intensity",
-                                             "hook_intensity_cat", "ascaris_yn","trichuris_yn","hook_yn","sth_yn",
-                                             "giardia_yn","sth_coinf","sth_giar_coinf")) %>%
-   rename(childid=childidr2)
+ wbk_sth <- wbk_sth %>% rename(childid=childidr2)
 
 
 #Merge WBK datasets
@@ -66,19 +73,28 @@ dim(wbk)
 
 table(wbk$tr)
 
+d <- anti_join(wbk_diar, wbk_sth, by=c("childid")) 
+d2 <- anti_join( wbk_sth, wbk_diar, by=c("childid")) %>% filter(!is.na(sth_coinf)|!is.na(giardia_yn))
 
-#Clean combined datasets
-wbb$posgi[wbb$posgi==9] <- NA
-wbb$poseh[wbb$poseh==9] <- NA
-wbb$poscr[wbb$poscr==9] <- NA
-wbb$posprot[wbb$posprot==9] <- NA
+dim(d)
+dim(d2)
+head(d)
+head(d2)
 
-wbb$ctgi[wbb$ctgi==99] <- NA
-wbb$cteh[wbb$cteh==99] <- NA
-wbb$ctcr[wbb$ctcr==99] <- NA
+table(d$targetchild)
+unique(d$hhid)[1:20]
+unique(d2$hhidr2)[1:20]
 
+d[d$hhid=="20062730",]
+d2[d2$hhidr2=="20062730",]
+d2$childid[d2$hhidr2=="20062730"]
+2003053720
 
-#Save results
-saveRDS(wbb, here("data/clean_wbb.rds"))
-saveRDS(wbk, here("data/clean_wbk.rds"))
+d[d$hhid=="20093030",]
+d2[d2$hhidr2=="20093030",]
+d2$childid[d2$hhidr2=="20093030"]
+2006083720
 
+#Note: seems like mostly either non-merging HHID's
+#or merging HHID but different childid's 
+#because of what seems like different target children
