@@ -12,8 +12,8 @@ wbb_sth <- read.csv(here("osf data/washb-bangladesh-sth-public.csv"))
 
 
 wbk_tr <- read.csv(here("osf data/washb-kenya-tr-public.csv"))
-wbk_diar <- read.csv(here("osf data/washb-kenya-diar-public.csv"))
-wbk_sth <- read_dta(here("osf data/parasites_kenya_public_ca20171215.dta"))
+wbk_diar <- read.csv(here("osf data/washb-kenya-diar-public.csv")) %>% filter(time==2)
+wbk_sth <- read_dta(here("osf data/parasites_kenya_public_ca20171215.dta")) %>% filter(!is.na(sth_coinf)|!is.na(giardia_yn))
 
 #Clean WBB datasets
 wbb_diar <- wbb_diar %>% filter(svy==2) %>% subset(., select =c("dataid","childid","sex", "agedays","diar7d","clusterid"))
@@ -31,6 +31,9 @@ wbb <- left_join(wbb, wbb_tr, by=c("clusterid"))
 wbb <- left_join(wbb, wbb_enrol, by=c("dataid","clusterid","block"))
 dim(wbb)
 head(wbb)
+
+
+
 
 #Should be around 7094 based on number of kids with diarrhea at year 2 and number of STH samples
 
@@ -68,8 +71,11 @@ wbk_diar <- wbk_diar %>%                                         # "HHS")) %>%
 #Merge WBK datasets
 dim(wbk_diar)
 dim(wbk_sth)
-wbk <- left_join(wbk_diar, wbk_sth, by=c("childid")) %>% filter(!is.na(sth_coinf)|!is.na(giardia_yn))
+wbk <- left_join(wbk_diar, wbk_sth, by=c("childid")) 
 dim(wbk)
+
+# WBB: 9,964 endline diarrhea measurements, 10,011 sth/giardia measurements, 5,373 children with both diarrhea and STH
+# WBK: 7,770 endline diarrhea measurements, 9,077 sth/giardia measurements, 5,272  children with both diarrhea and STH
 
 table(wbk$tr)
 

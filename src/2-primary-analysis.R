@@ -7,16 +7,32 @@ source(here::here("0-config.R"))
 
 wbb <- readRDS(here("data/clean_wbb.rds"))
 wbk <- readRDS(here("data/clean_wbk.rds"))
+colnames(wbb)
+colnames(wbk)
+
+prop.table(table(wbb$sth,wbb$diar7d),1)
+prop.table(table(wbk$sth_giar_coinf,wbk$diar7d),1)
+
+
 
 #exposures
-wbk_Xvars_bin <- c("ascaris_yn", "trichuris_yn", "hook_yn", "sth_yn", "giardia_yn", "sth_coinf", "sth_giar_coinf")
-wbk_Xvars_cont <- c("asca_intensity",  "tric_intensity", "hook_intensity" )
+wbk_Xvars_bin <- c("qpcr_Ascaris","qpcr_Trichuris", "qpcr_Necator",     
+                   "qpcr_Ancylostoma","qpcr_Strongyloides",
+                   "ascaris_yn", "trichuris_yn", "hook_yn", "sth_yn", "giardia_yn", "sth_coinf", "sth_giar_coinf")
+wbk_Xvars_cont <- c("asca_intensity",  "tric_intensity", "hook_intensity")
+                    
 
-wbb_Xvars_bin <- c("al",             
+wbb_Xvars_bin <- c("qpcr.positive.Ac",  "qpcr.positive.Ad",  "qpcr.positive.Al" ,
+                   "qpcr.positive.IAC", "qpcr.positive.Na",  "qpcr.positive.Ss",  "qpcr.positive.Tt", 
+                   "qpcr.positive.Hw",  "qpcr.positive.Sth", 
+                   "al",             
 "tt", "hw", "sth", "posgi", "poseh", "poscr", "posprot",        
 "posmult"   )
 
-wbb_Xvars_cont <- c("logalepg", "loghwepg", "logttepg","ctgi",            "cteh",            "ctcr")
+wbb_Xvars_cont <- c("qpcr.CTmean.Ac","qpcr.CTmean.Ad",
+                    "qpcr.CTmean.Al","qpcr.CTmean.IAC","qpcr.CTmean.Na","qpcr.CTmean.Ss",
+                    "qpcr.CTmean.Tt",
+                    "logalepg", "loghwepg", "logttepg","ctgi", "cteh", "ctcr")
 
 for(i in wbk_Xvars_bin){print(summary(wbk[[i]]))}
 for(i in wbk_Xvars_cont){print(summary(wbk[[i]]))}
