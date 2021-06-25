@@ -1,33 +1,47 @@
 ---
 title: "sth-enteric-infection-results"
-output: html_document
+output:
+  html_document: default
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
+library(flextable)
+library(tidyverse)
 load(here::here("results/results.Rdata"))
+
+  format_tab <- function(d){
+    d <- d %>% mutate(
+      coef = round(coef, 2),
+      RR = round(RR, 2),
+      ci.lb = round(ci.lb, 2),
+      ci.ub = round(ci.ub, 2),
+      pval = round(pval, 4),
+  ) %>% subset(., select = -c(se, Zval))
+}
+
 ```
 
 
 ## WBB adj
 
 ```{r, echo=F}
-knitr::kable(wbb_bin_adj)
+flextable(format_tab(wbb_bin_adj))
 ```
 
 ```{r, echo=F}
-knitr::kable(wbb_cont_adj)
+flextable(format_tab(wbb_cont_adj))
 ```
 
 ## WBK adj
 
 ```{r, echo=F}
-knitr::kable(wbk_bin_adj)
+flextable(format_tab(wbk_bin_adj))
 ```
 
 ```{r, echo=F}
-knitr::kable(wbk_cont_adj)
+flextable(format_tab(wbk_cont_adj))
 ```
 
 
@@ -36,19 +50,19 @@ knitr::kable(wbk_cont_adj)
 ## WBB unadj
 
 ```{r, echo=F}
-knitr::kable(wbb_bin_unadj)
+flextable(format_tab(wbb_bin_unadj))
 ```
 
 ```{r, echo=F}
-knitr::kable(wbb_cont_unadj)
+flextable(format_tab(wbb_cont_unadj))
 ```
 
 ## WBK unadj
 
 ```{r, echo=F}
-knitr::kable(wbk_bin_unadj)
+flextable(format_tab(wbk_bin_unadj))
 ```
 
 ```{r, echo=F}
-knitr::kable(wbk_cont_unadj)
+flextable(format_tab(wbk_cont_unadj))
 ```

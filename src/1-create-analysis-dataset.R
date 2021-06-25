@@ -15,6 +15,7 @@ head(wbb_qPCR)
 wbk_tr <- read.csv(here("osf data/washb-kenya-tr-public.csv"))
 wbk_diar <- read.csv(here("osf data/washb-kenya-diar-public.csv"))
 wbk_sth <- read_dta(here("osf data/parasites_kenya_public_ca20171215.dta"))
+head(wbk_sth)
 wbk_qPCR <- read.csv("C:/Users/andre/Downloads/qPCR_sth_dataset_11JUN2019_Jade.csv")
 head(wbk_qPCR)
 

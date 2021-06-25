@@ -25,9 +25,7 @@ wbk_Xvars_cont <- c("asca_intensity",  "tric_intensity", "hook_intensity")
 wbb_Xvars_bin <- c("qpcr.positive.Ac",  "qpcr.positive.Ad",  "qpcr.positive.Al" ,
                    "qpcr.positive.IAC", "qpcr.positive.Na",  "qpcr.positive.Ss",  "qpcr.positive.Tt", 
                    "qpcr.positive.Hw",  "qpcr.positive.Sth", 
-                   "al",             
-"tt", "hw", "sth", "posgi", "poseh", "poscr", "posprot",        
-"posmult"   )
+                   "al","tt", "hw", "sth", "posgi", "poseh", "poscr", "posprot","posmult")
 
 wbb_Xvars_cont <- c("qpcr.CTmean.Ac","qpcr.CTmean.Ad",
                     "qpcr.CTmean.Al","qpcr.CTmean.IAC","qpcr.CTmean.Na","qpcr.CTmean.Ss",
@@ -135,3 +133,5 @@ save(
   wbb_bin_unadj, wbk_bin_unadj, wbb_cont_unadj, wbk_cont_unadj,
   wbb_bin_adj, wbk_bin_adj, wbb_cont_adj, wbk_cont_adj,
   file=here("results/results.Rdata"))
+
+
